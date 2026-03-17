@@ -1,0 +1,25 @@
+experiment_name: supervised_mvp
+seed: 42
+device: cuda
+epochs: 200
+batch_size: 16
+num_workers: 4
+learning_rate: 0.0004
+weight_decay: 0.0
+grad_clip_norm: 1.0
+dataset_config: configs/data/dataset.yaml
+generator_config: configs/model/generator.yaml
+output_dir: outputs
+checkpoint_name: supervised_mvp.pt
+save_every: 10
+visualize_every: 5
+# Resume from a checkpoint (set to path or null).
+resume_from: null
+# LR scheduler: cosine, step, or null (constant LR).
+lr_scheduler: cosine
+lr_scheduler_min_lr: 1.0e-6
+loss_weights:
+  hole_l1: 1.0
+  valid_l1: 0.1
+  grad: 0.2
+  curvature: 0.0

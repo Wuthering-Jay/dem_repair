@@ -1,0 +1,12 @@
+experiment_name: cgan_baseline
+seed: 42
+device: cuda
+epochs: 10
+batch_size: 4
+num_workers: 0
+generator_learning_rate: 0.0001
+discriminator_learning_rate: 0.0001
+dataset_config: configs/data/dataset.yaml
+generator_config: configs/model/generator.yaml
+discriminator_config: configs/model/discriminator.yaml
+output_dir: outputs

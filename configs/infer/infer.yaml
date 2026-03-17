@@ -1,0 +1,8 @@
+dataset_config: configs/data/dataset.yaml
+generator_config: configs/model/generator.yaml
+checkpoint_path: outputs/checkpoints/supervised_mvp.pt
+input_dir: data/processed/samples/test
+output_dir: outputs/predictions
+batch_size: 1
+device: cuda
+save_visualizations: true

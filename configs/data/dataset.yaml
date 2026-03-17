@@ -1,0 +1,98 @@
+raw_las_dir: data/raw/las
+raw_dem_dir: data/raw/dem
+raw_dsm_dir: data/raw/dsm
+processed_raster_dir: data/processed/rasters
+processed_sample_dir: data/processed/samples
+resolution: 1.0
+las_chunk_size: 1000000
+chunk_progress_interval: 5
+raster_compression: deflate
+tile_size: 256
+stride: 128
+use_dsm: true
+prefer_reference_dem: true
+required_channels:
+  - partial_dem
+  - coarse_dem
+  - dsm
+  - mask
+  - all_density
+  - ground_density
+  - vegetation_density
+  - building_density
+  - mean_intensity
+  - mean_return_num
+  - last_return_ratio
+  - ground_penetration_ratio
+  - confidence_map
+  - slope
+  - curvature
+  - openness_s1
+  - openness_s2
+  - openness_s3
+  - openness_s4
+train_split: train
+val_split: val
+test_split: test
+dem_generation_method: tin
+dsm_generation_method: surface_max
+# Maximum triangle edge length (map units) for TIN DEM generation.
+# Triangles with any edge longer than this are masked out as unreliable.
+# Set to 0 to keep all triangles.  A good default is ~10-20x the resolution.
+tin_max_edge_length: 20.0
+simulate_voids: true
+small_gap_area: 32
+reference_dem_interpolation_method: idw
+reference_dem_smooth_sigma: 0.0
+reference_dem_max_search_distance: 48.0
+reference_dem_smoothing_iterations: 1
+reference_dem_support_dilation: 0
+reference_dem_support_gap_area: 4
+reference_dem_support_gap_neighbor_count: 4
+reference_dem_post_median_size: 3
+reference_dem_post_median_blend: 0.75
+reference_dem_final_hole_area: 8
+reference_dem_final_hole_neighbor_count: 5
+reference_dem_final_hole_search_distance: 12.0
+reference_dem_final_hole_smoothing_iterations: 1
+reference_dem_low_ground_density: 2.0
+reference_dem_trusted_ground_density: 5.0
+reference_dem_low_penetration_ratio: 0.03
+reference_dem_trusted_penetration_ratio: 0.20
+reference_dem_confidence_threshold: 0.55
+sample_min_valid_ratio: 0.95
+sample_min_mask_ratio: 0.03
+sample_max_mask_ratio: 0.35
+void_strategies:
+  - irregular
+  - block
+  - vegetation_priority
+void_coverage_range:
+  - 0.05
+  - 0.22
+openness_scales:
+  - 3
+  - 7
+  - 15
+  - 31
+coarse_interpolation:
+  method: idw
+  smooth_sigma: 0.0
+  max_search_distance: 64.0
+  smoothing_iterations: 1
+confidence_distance_scale: 24.0
+visualization_max_samples: 0
+
+# Fixed normalization scales for auxiliary channels.
+# Using fixed scales ensures the same real-world value always maps to the
+# same normalized value regardless of which sample it appears in.
+# Density channels are log1p-transformed before dividing by scale.
+# Feature channels are divided by scale directly.
+# Set to 0 to fall back to per-sample percentile (not recommended).
+normalization_scales:
+  all_density: 4.5        # log1p(~90 pts/m²)
+  ground_density: 3.5     # log1p(~32 pts/m²)
+  vegetation_density: 3.5
+  building_density: 3.5
+  mean_intensity: 40000.0 # typical 16-bit LiDAR intensity
+  mean_return_num: 4.0    # max ~5 returns
